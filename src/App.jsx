@@ -1,51 +1,30 @@
-import React, { useState } from 'react'
-import { Home } from './Home'
-import { About } from './About'
-import { Projects } from './Projects'
-import "./App.css"
+import React from "react";
+import { Home } from "./Home";
+import { About } from "./About";
+import { Projects } from "./Projects";
+import "./App.css";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 function App() {
-  const [route, setRoute] = useState("/")
-
-  function renderComponent() {
-    switch(route) {
-      case "/":
-        return <Home />
-      case "/about":
-        return <About />
-      default: 
-        return <Projects />
-    }
-  }
-
-  function onLinkClick(e) {
-    e.preventDefault()
-    const id = e.target.id
-    if (id === "home") {
-      setRoute("/")
-    } else if (id === "about") {
-      setRoute("/about")
-    } else {
-      setRoute("/projects")
-    }
-  }
-
-  // 3 different components
-  // home component will have the string in state of "/"
-  // the about component will have the string in state of "/about"
-  // the projects component will have the string in state of "/projects"
-
   return (
-    <div>
-      <nav>
-        <a onClick={onLinkClick} id="home" href="/">Home</a>
-        <a onClick={onLinkClick} id="about" href="/">About</a>
-        <a onClick={onLinkClick} id="projects" href="/">Projects</a>
-      </nav>
-      {renderComponent()}
-    </div>
-  )
-
+    <BrowserRouter>
+      {/* initialize react router  */}
+      <div>
+        <nav>
+          {/* navigation between different components */}
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/projects">Projects</Link>
+        </nav>
+        <Switch>
+          {/* defining routes with paths */}
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/projects" component={Projects} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default App;
